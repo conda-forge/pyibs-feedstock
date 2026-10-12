@@ -1,13 +1,13 @@
 {% set name = "pyibs" %}
-{% set version = "0.1.0" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyIBS-{{ version }}.tar.gz
-  sha256: a89670027e8e5bb59c5b7f994625c93c3b4b134e4dfd04e21edf4fc923248a5c
+  url: https://files.pythonhosted.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c86b1cfbf691a45d90426befcc0e78c475cb87939040d47e7ee9697ce5b7dc10
 
 build:
   noarch: python
@@ -16,39 +16,35 @@ build:
 
 requirements:
   host:
-    - python >=3.9
-    - setuptools >=45
+    - python {{ python_min }}
+    - setuptools >=77
     - setuptools-scm >=6.2
     - pip
   run:
-    - python >=3.9
-    - cma >=3.1.0
-    - corner >=2.2.1
-    - dill >=0.3.5.1
-    - gpyreg >=0.1.0
-    - imageio >=2.13.5
-    - matplotlib-base >=3.5.1
-    - numpy >=1.22.1
-    - plotly >=5.11.0
-    - pytest >=6.2.5
-    - pytest-mock >=3.6.1
-    - pytest-rerunfailures >=10.2
-    - scipy >=1.7.3
+    - python >={{ python_min }}
+    - numpy >=2.0.0
+    - scipy >=1.13.0
 
 test:
   imports:
     - pyibs
   commands:
     - pip check
+    - python -m pytest --pyargs pyibs -x -vv
   requires:
     - pip
+    - python {{ python_min }}
+    - pytest >=6.2.5
 
 about:
-  home: https://github.com/acerbilab/pyibs/
+  home: https://acerbilab.org/pyibs/
   summary: Inverse Binomial Sampling in Python.
-  dev_url: https://github.com/acerbilab/pyibs/
+  description: |
+    PyIBS is a Python implementation of inverse binomial sampling (IBS), which gives unbiased estimates of the log-likelihood of a model that can be simulated, for data with discrete responses, with an estimate of their variance.
   license: BSD-3-Clause
   license_file: LICENSE
+  doc_url: https://acerbilab.org/pyibs/
+  dev_url: https://github.com/acerbilab/pyibs/
 
 extra:
   recipe-maintainers:
